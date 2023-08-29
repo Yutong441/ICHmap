@@ -1,0 +1,7 @@
+data/
+data_raw/
+scripts/
+stats/
+stats_conn/
+test/
+*.pyc
