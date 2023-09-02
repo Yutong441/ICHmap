@@ -3,7 +3,7 @@ import pandas as pd
 from bct_for import fort as bf
 
 
-def normalize_metrics_for(W, k, iteration=1000):
+def normalize_metrics_for(W, k, iteration=1):
     assert type(W) == pd.DataFrame
     M = W.copy().values.astype(float)
     Mf = np.asfortranarray(M)

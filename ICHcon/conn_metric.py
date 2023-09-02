@@ -1,4 +1,3 @@
-import re
 import os
 import pandas as pd
 from conn_matrix import get_conn_mat_all
@@ -11,10 +10,8 @@ def normalize_metrics(W, k, method="fortran", *args, **kwargs):
 
 
 def get_all_metrics(lesion_path, save_M_prefix, atlas_dir, *args, **kwargs):
-    atlas = ["HCP-MMP"]
-    for i in ["visual", "somatomotor", "dorsal_attention", "ventral_attention",
-              "limbic", "frontoparietal", "default"]:
-        atlas.append(i)
+    atlas = ["HCP-MMP", "visual", "somatomotor", "dorsal_attention",
+             "ventral_attention", "limbic", "frontoparietal", "default"]
 
     all_mets, all_nodes = [], []
     for i in atlas:
@@ -24,7 +21,8 @@ def get_all_metrics(lesion_path, save_M_prefix, atlas_dir, *args, **kwargs):
                                     lesion_path=lesion_path,
                                     ref_path=atlas_dir+"/conn_mat/")
 
-        mat_dict = {"count": M, "ncount": nM}
+        # mat_dict = {"count": M, "ncount": nM}
+        mat_dict = {"count": M}
 
         for key, val in mat_dict.items():
             # threshold the normalized count matrix
@@ -43,7 +41,7 @@ def get_all_metrics(lesion_path, save_M_prefix, atlas_dir, *args, **kwargs):
             node_met["measure"] = key
             all_nodes.append(node_met)
 
-        if re.sub("\\/$", "", os.path.dirname(i)) == "atlas":
+        if i == "HCP-MMP":
             T.to_csv(save_M_prefix+"tract_num.csv")
 
     all_mets = pd.concat(all_mets, axis=0)
