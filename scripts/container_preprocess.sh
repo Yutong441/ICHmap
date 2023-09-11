@@ -15,5 +15,5 @@ module load rhel8/default-icl              # REQUIRED - loads the basic environm
 #! Insert additional module load commands after this line if needed:
 cd /home/yutong/software/
 root=/home/yutong/data/MGH_ICH/results/
-singularity exec --bind $root:/opt/data /bin/bash /opt/preprocess.sh \
+singularity exec --bind $root:/opt/data /bin/bash ichmap.sif /opt/preprocess.sh \
     $SLURM_ARRAY_TASK_COUNT $SLURM_ARRAY_TASK_ID $SLURMS_CPU_PER_TASKS

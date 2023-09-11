@@ -1,4 +1,5 @@
 # https://github.com/dorianps/LESYMAP/wiki/Testing-LESYMAP-installation
+Sys.setenv(ANTS_RANDOM_SEED = 100)
 library(LESYMAP)
 args <- commandArgs(trailingOnly = TRUE)
 

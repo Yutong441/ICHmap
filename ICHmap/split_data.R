@@ -1,4 +1,3 @@
-Sys.setenv(ANTS_RANDOM_SEED = 100)
 library(magrittr)
 library(data.table)
 

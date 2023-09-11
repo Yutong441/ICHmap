@@ -1,7 +1,8 @@
 #! /bin/bash
-cd /opt
 outcome=${1:-"Disability"}
+cd /opt
 mkdir data/tmp -p
+mkdir data/tmp/julia -p
 mkdir data/VLSM -p
 mkdir data/VLSM/$outcome -p
 
@@ -17,7 +18,8 @@ num=$(cat data/tmp/$outcome".csv" | wc -l)
 num=$((num - 1))
 echo "n="$num > data/VLSM/$outcome/"sample.txt"
 
-JULIA_DEPOT_PATH=/opt/.julia_lib julia ICHmap/VLSMsurv.jl --root=data/tmp \
+JULIA_DEPOT_PATH=data/.julia_lib julia ICHmap/VLSMsurv.jl \
+    --root=data/tmp \
     --outcome=$outcome \
     --save_dir="data/VLSM/"$outcome
 

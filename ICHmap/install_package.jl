@@ -1,0 +1,10 @@
+using Pkg
+Pkg.add("Survival")
+Pkg.add("StatsModels")
+Pkg.add("CSV")
+Pkg.add("DataFrames")
+Pkg.add("GLM")
+Pkg.add("NIfTI")
+Pkg.add("ArgParse")
+Pkg.add("MultipleTesting")
+Pkg.add("HypothesisTests")

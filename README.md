@@ -77,7 +77,11 @@ stats
 ```
 
 ### VLSM
-Running VLSM is very simple:
+First, install the julia packages into the `$result/.julia_lib` folder
+```bash
+singularity exec --bind $result:/opt/data ichmap.sif /bin/bash /opt/setup_julia.sh
+```
+
 ```bash
 singularity exec --bind $result:/opt/data ichmap.sif /bin/bash /opt/VLSM.sh Disability
 ```

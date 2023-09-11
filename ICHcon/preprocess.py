@@ -103,13 +103,11 @@ def preprocess_ct(img_path, out_path, target_res=5):
     # sometimes the pixdim is inaccurate
     # it is not possible for head CT to be smaller than 50 slices yet having
     # 1mm resolution
-    abort = img.shape[2] < 50 and res < 1
-    if not abort:
-        new_shape = [*img.shape[:2], int(img.shape[2]*res/target_res)]
-        new_img, affine = resample(img, new_shape)
-        new_img = remove_blank(new_img)
-        new_img = nib.Nifti1Image(new_img, affine=affine)
-        new_img.to_filename(out_path)
+    new_shape = [*img.shape[:2], int(img.shape[2]*res/target_res)]
+    new_img, affine = resample(img, new_shape)
+    new_img = remove_blank(new_img)
+    new_img = nib.Nifti1Image(new_img, affine=affine)
+    new_img.to_filename(out_path)
 
 
 def empty_index(vec):
@@ -211,11 +209,17 @@ def preprocess_imgs(ct_path, save_path, skullstrip=True, preprocess=True):
         ID = ''.join([str(i) for i in np.random.choice(9, 10)])
         tmp_path = re.sub(".nii.gz", ID+".nii.gz", save_path)
 
-        skull_strip(ct_path, tmp_path)
-        preprocess_ct(tmp_path, tmp_path)
-        bash_in_python("mri_synthstrip -i {}".format(tmp_path) +
-                       " -o {}".format(save_path))
-        os.remove(tmp_path)
+        img = Image(ct_path)
+        res = img.pixdim[2]
+        abort = img.shape[2] < 50 and res < 1
+
+        if not abort:
+            skull_strip(ct_path, tmp_path)
+            preprocess_ct(tmp_path, tmp_path)
+            if os.path.exists(tmp_path):
+                bash_in_python("mri_synthstrip -i {}".format(tmp_path) +
+                               " -o {}".format(save_path))
+            os.remove(tmp_path)
 
 
 if __name__ == "__main__":
